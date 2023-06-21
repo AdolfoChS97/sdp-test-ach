@@ -1,14 +1,33 @@
 import { Component } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {CommonModule, NgFor} from '@angular/common';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDrag,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { XlsxService } from './services/xlsx/xlsx.service';
 import { FileReaderService } from './services/file-reader/file-reader.service';
 import { getObjectKeys } from './utils/get-object-keys';
+import { AngularMaterialModule } from './modules/angular-material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule, 
+    AngularMaterialModule, 
+    FlexLayoutModule,
+    CdkDropList, 
+    NgFor, 
+    CdkDrag],
 })
 export class AppComponent {
   

@@ -1,30 +1,30 @@
-<div fxLayout="row" fxLayoutAlign="center center" fxFill >
-  <button 
-    type="button"
-    mat-raised-button
-    (click)="fileInput.click()" 
-  >
-    Choose file
-    <mat-icon>cloud_upload</mat-icon>
-  </button>
-  <input hidden (change)="onFileSelected($event)" #fileInput type="file">
-  &nbsp;
-  <span *ngIf="selectedFile" class="file-name">{{selectedFile.name}}</span>
-</div>
-
-<div fxLayout="row" fxLayoutAlign="center center" fxFill *ngIf="categories">
-  <h2>Interfaz de arrastrar y soltar</h2>
-<div class="container">
-  <div class="column" *ngFor="let category of getObjectKeys(categories)">
-    <h3>{{ category }}</h3>
-    <!-- <div cdkDropList
-         [cdkDropListData]="categories[category]"
-         (cdkDropListDropped)="intercambiarElementos($event)"
-         class="lista"
-         [id]="columna.key"> -->
-      <!--  -->
-    <!-- </div> -->
-
-    <!-- <div class="elemento" *ngFor="let elemento of categories" cdkDrag>{{ elemento.Marca }}</div> -->
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="250" fxFill>
+  <div fxLayout="column">
+    <button 
+      type="button"
+      mat-raised-button
+      (click)="fileInput.click()" 
+    >
+      Choose file
+      <mat-icon>cloud_upload</mat-icon>
+    </button>
+    <span *ngIf="selectedFile" class="file-name">{{selectedFile.name}}</span>
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file">
+    &nbsp;
+  </div>
+  <div fxLayout="row" *ngIf="categories" fxLayoutGap="75" >
+    <div *ngFor="let category of getObjectKeys(categories)">
+      <h2>{{ category }}</h2>
+      <div 
+        cdkDropList
+        #{{category}}="cdkDropList"
+        [cdkDropListData]="category"
+        [cdkDropListConnectedTo]="category"
+      >
+        <div *ngFor="let item of categories[category]" cdkDrag>
+          {{item.Marca}}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
