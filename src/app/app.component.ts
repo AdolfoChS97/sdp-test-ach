@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {CommonModule, NgFor} from '@angular/common';
 import {
   CdkDragDrop,
@@ -13,8 +13,6 @@ import { FileReaderService } from './services/file-reader/file-reader.service';
 import { getObjectKeys } from './utils/get-object-keys';
 import { AngularMaterialModule } from './modules/angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { BrowserModule } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-root',
@@ -32,8 +30,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 export class AppComponent {
   
   public selectedFile: File | null = null;
-  public categories: any;
   public getObjectKeys = getObjectKeys;
+  public categories: any;
+
   constructor(
     private _snackBar: MatSnackBar,
     private _xlsxService: XlsxService,
@@ -52,7 +51,6 @@ export class AppComponent {
         const { SheetNames, Sheets } = this._xlsxService.getWorkbookFromBinary(target?.result);
         const workSheets = this._xlsxService.getWorkSheets(SheetNames, Sheets);
         this.categories = this._xlsxService.getCategoriesByWorksheets(workSheets);
-        console.log(this.categories);
       }
     }
   }
@@ -67,7 +65,7 @@ export class AppComponent {
     return true;
   }
 
-  intercambiarElementos(event: any): void {
+  drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -75,7 +73,7 @@ export class AppComponent {
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex
+        event.currentIndex,
       );
     }
   }

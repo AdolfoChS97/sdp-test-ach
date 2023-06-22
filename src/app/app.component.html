@@ -16,12 +16,15 @@
     <div *ngFor="let category of getObjectKeys(categories)">
       <h2>{{ category }}</h2>
       <div 
+        class="example-list"
         cdkDropList
-        #{{category}}="cdkDropList"
-        [cdkDropListData]="category"
-        [cdkDropListConnectedTo]="category"
+        id="{{category}}"
+        [cdkDropListData]="categories[category]"
+        [cdkDropListConnectedTo]="getObjectKeys(categories)"
+        (cdkDropListDropped)="drop($event)"
       >
-        <div *ngFor="let item of categories[category]" cdkDrag>
+        <div class="example-box" 
+        *ngFor="let item of categories[category]" cdkDrag>
           {{item.Marca}}
         </div>
       </div>
